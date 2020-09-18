@@ -5,18 +5,24 @@ import Aux from '../Aux/Aux';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
+        // i can use useeffect better in functional component
         state = {
-            error: null
+            error: null,
         }
-        componentWillMount() {
-            axios.interceptors.request.use(request => {
+        componentWillMount = () => {
+            this.reqInterceptor = axios.interceptors.request.use(request => {
                 this.setState({ error: null });
                 return request;
             });
-            axios.interceptors.response.use(response => response, error => {
+            this.resInterceptor = axios.interceptors.response.use(response => response, error => {
                 this.setState({ error: error });
             });
         }
+        componentWillUnmount () {
+            axios.interceptors.request.eject(this.reqInterceptor);
+            axios.interceptors.response.eject(this.resInterceptor);
+        }
+
         errorConfirmedHandler = () =>  {
             this.setState({ error: null })
         }
