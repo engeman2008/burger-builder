@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Button from '../../../components/UI/Button/Button';
 import styles from './ContactData.module.css';
@@ -96,7 +97,7 @@ class ContactData extends Component {
 
     checkValidty = (value, rules) => {
         let isValid = true;
-        if(!rules){
+        if (!rules) {
             return true;
         }
         if (rules.required) {
@@ -120,7 +121,7 @@ class ContactData extends Component {
         }
 
         const order = {
-            ingredients: this.props.ingredients,
+            ingredients: this.props.ings,
             price: this.props.price,
             orderData: formData
         };
@@ -148,7 +149,7 @@ class ContactData extends Component {
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
         let formIsValid = true;
-        for(let inputIdentifier in updatedOrderForm){
+        for (let inputIdentifier in updatedOrderForm) {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
         }
 
@@ -174,7 +175,7 @@ class ContactData extends Component {
                             value={formElement.config.value}
                             invalid={!formElement.config.valid}
                             shouldValidate={formElement.config.validation}
-                            touched = {formElement.config.touched}
+                            touched={formElement.config.touched}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                     ))
                 }
@@ -193,4 +194,11 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+}
+export default connect(mapStateToProps)(ContactData);
