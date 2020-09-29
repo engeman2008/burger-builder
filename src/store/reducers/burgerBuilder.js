@@ -1,6 +1,5 @@
-import { act } from 'react-dom/test-utils';
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from "../Utility";
+import { updateObject } from "../../shared/Utility";
 
 const initialState = {
     ingredients: null,
