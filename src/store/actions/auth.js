@@ -24,50 +24,31 @@ export const authFail = (error) => {
 }
 
 export const logout = () => {
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('expirationDate');
-    // localStorage.removeItem('userId');
-
     return {
         type: actionTypes.AUTH_INITIIATE_LOGOUT
     }
 }
 
+export const logoutSucceed = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    };
+}
+
 export const checkAuthTimeout = (expirationTime) => {
     //360 sec = 1 hours = 360000 millisecond
-    return dispatch => {
-        setTimeout(() => {
-            dispatch(logout());
-        }, expirationTime * 1000);
+    return {
+        type: actionTypes.AUTH_CHECK_TIMEOUT,
+        expirationTime: expirationTime
     }
 }
 
 export const auth = (email, password, isSignup) => {
-    return dispatch => {
-        dispatch(authStart());
-        const authData = {
-            email: email,
-            password: password,
-            returnSecureToken: true
-        };
-        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDvYk-ae3sK-8MSmPgJCf4PPczE6JiDdvg';
-        if (!isSignup) {
-            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDvYk-ae3sK-8MSmPgJCf4PPczE6JiDdvg'
-        }
-        axios.post(url,
-            authData)
-            .then(response => {
-                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                localStorage.setItem('token', response.data.idToken);
-                localStorage.setItem('expirationDate', expirationDate);
-                localStorage.setItem('userId', response.data.localId);
-
-                dispatch(authSuccess(response.data.idToken, response.data.localId));
-                dispatch(checkAuthTimeout(response.data.expiresIn))
-            })
-            .catch(error => {
-                dispatch(authFail(error.response.data.error));
-            })
+    return {
+        type: actionTypes.AUTH_USER,
+        email: email,
+        password: password,
+        isSignup: isSignup
     }
 }
 
