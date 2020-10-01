@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import * as actionTypes from './actionTypes';
 
 export const authStart = () => {
@@ -36,7 +34,6 @@ export const logoutSucceed = () => {
 }
 
 export const checkAuthTimeout = (expirationTime) => {
-    //360 sec = 1 hours = 360000 millisecond
     return {
         type: actionTypes.AUTH_CHECK_TIMEOUT,
         expirationTime: expirationTime
