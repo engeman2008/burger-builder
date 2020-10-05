@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
@@ -17,7 +17,7 @@ const App = props => {
   },[])
 
   let routes = (
-    <Suspense fallback={<span>Loading</span>}>
+    <Suspense fallback={<span>Loading...</span>}>
       <Switch>
         <Route path='/auth' component={Auth} />
         <Route path='/' exact component={BurgerBuilder} />
