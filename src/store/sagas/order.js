@@ -1,8 +1,7 @@
-import { put, delay } from "redux-saga/effects";
+import { put } from "redux-saga/effects";
 import axios from '../../axios-orders';
 
 import * as actions from '../actions/index';
-
 
 export function* purchaseBurgerSaga(action) {
     yield put(actions.purchaseBurgerStart());
