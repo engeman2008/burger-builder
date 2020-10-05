@@ -8,9 +8,10 @@ import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 const Orders = props => {
-    useEffect(()=>{
-        props.onFetchOrders(props.token, props.userId);
-    },[])
+    const { onFetchOrders } = props;
+    useEffect(() => {
+        onFetchOrders(props.token, props.userId);
+    }, [onFetchOrders])
 
     let orders = <Spinner />;
     if (!props.loading) {
